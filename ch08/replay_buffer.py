@@ -19,7 +19,7 @@ class ReplayBuffer:
     def get_batch(self):
         data = random.sample(self.buffer, self.batch_size)
 
-        state = np.stack([x[0] for x in data])
+        state = np.stack([x[0][0] if isinstance(x[0], tuple) else x[0] for x in data]) ## (array([ 0.0024583 , -0.00793713,  0.02181692,  0.02300685], dtype=float32), {}) 와 같이 {})으로 끝나는 tuple인 경우가 있습니다.
         action = np.array([x[1] for x in data])
         reward = np.array([x[2] for x in data])
         next_state = np.stack([x[3] for x in data])
